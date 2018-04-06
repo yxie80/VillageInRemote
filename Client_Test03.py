@@ -50,7 +50,7 @@ class Client:
     
     # data cleansing
     def data_cleansing(self,df):
-                      
+    	break                  
     
     # Fields selection fuction  *************Not Finished Yet***************
     def fields_selection(self,questions=0): # value of quest indicates the list of fields that required by corresponding question
@@ -68,7 +68,7 @@ class Client:
         # get a new dataframe based on the selected features
         df1 = self.upload_Dataframe.loc[:,listOfSelection]
         # extrac unique value of 'UNSPSC Titile'
-        listOfCategory = df1.loc[:,'UNSPSC Title'].unique()
+        listOfCategory = df1.loc[:,'UNSPSC Title'].unique()  # len(listOfCategory) is longer than sumByCat, nan(float type) is included
         # create a new empty dataframe
         new_pd = pd.DataFrame(columns=listOfSelection)
         
