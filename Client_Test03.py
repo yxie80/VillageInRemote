@@ -63,7 +63,7 @@ class Client:
             self.listOfSelection = []
             
     # visualisation quesiton, use bar chart to represent the Tender funding by category of interest
-    # bsed ont the UNSPSC code & Title
+    # based on the UNSPSC code & Title
     def visual_quest1(self,listOfSelection):
         # get a new dataframe based on the selected features
         df1 = self.upload_Dataframe.loc[:,listOfSelection]
