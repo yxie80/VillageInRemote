@@ -9,7 +9,7 @@ import sys
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.uic import loadUi
-from Client_Test01 import Client
+from Client_Test02 import Client
 
 class client_test01(QDialog):
     client = Client()    
