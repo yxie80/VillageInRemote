@@ -39,9 +39,10 @@ class Client:
     def upload_file(self,upload_file):
         while True:
             try:              
+                # save the dataframe into upload_Dataframe
                 self.upload_Dataframe = pd.read_csv(upload_file,low_memory=False)
-                self.listOfFields = list(self.upload_Dataframe)
-                self.output = 'Pass'     
+                self.listOfFields = list(self.upload_Dataframe) # extract the list of header of dataframe
+                self.output = 'Pass'     # if successfully read the csv, give the Pass output to ui
             except FileNotFoundError:
                 self.output = "File Not Found!"
             except SyntaxError:
@@ -50,7 +51,7 @@ class Client:
     
     # data cleansing
     def data_cleansing(self,df):
-    	break                  
+        break                  
     
     # Fields selection fuction  *************Not Finished Yet***************
     def fields_selection(self,questions=0): # value of quest indicates the list of fields that required by corresponding question

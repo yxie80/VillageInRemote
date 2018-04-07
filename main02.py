@@ -9,14 +9,14 @@ import sys
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.uic import loadUi
-from Client_Test01 import Client
+from Client_Test03 import Client
 
-class client_test01(QDialog):
+class Client_test01(QDialog):
     client = Client()    
     filename = ''
     
     def __init__(self):
-        super(client_test01,self).__init__()
+        super(Client_test01,self).__init__()
         loadUi('uploadModule.ui',self)
         self.setWindowTitle('File uploading!')
         self.submitButton.clicked.connect(self.on_submitButton_clicked)
@@ -59,7 +59,7 @@ if __name__ == '__main__':
 #    client.comm_module()
  
     app=QApplication(sys.argv)
-    widget=client_test01()
+    widget=Client_test01()
     widget.show()
 
         
