@@ -158,26 +158,6 @@ class Client:
             self.listOfSelection = []
         else:
             self.listOfSelection = []
-            
-    # visualisation quesiton, use bar chart to represent the Tender funding by category of interest
-    # based on the UNSPSC code & Title
-    def visual_quest1(self,listOfSelection):
-        # get a new dataframe based on the selected features
-        df1 = self.upload_Dataframe.loc[:,listOfSelection]
-        # extrac unique value of 'UNSPSC Titile'
-        listOfCategory = df1.loc[:,'UNSPSC Title'].unique()
-        # create a new empty dataframe
-        new_pd = pd.DataFrame(columns=listOfSelection)
-        
-        for cat in listOfCategory:
-            # calculate the sum value by unique 'UNSPSC Title'
-            sumByCat = df1.groupby('UNSPSC Title')['Value'].sum()[cat]
-            # create a Serise with column = ['UNSPSC Title','Value']
-            df_sumByCat = pd.DataFrame([[sumByCat,cat]],columns=listOfSelection)
-            #update new_pd which saves the sum of value by title
-            new_pd = new_pd.append(df_sumByCat)
-            
-        print(new_pd)
 
     # Return the list of agency name with target category
     def category_agency(self, category_name):
