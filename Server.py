@@ -1,8 +1,10 @@
 import pandas as pd
+import numpy as np
 
 
 class Server:
     # doc stored in the server for basic structure
+    updated_data = pd.DataFrame()
     base = pd.read_csv('Comm.csv', low_memory=False)
     base["Filter UNSPSC of Interest"] = base["Filter UNSPSC of Interest"].astype("category")
     base["Filter UNSPSC of Interest"].cat.set_categories(["Rest of Categories", "Categories of Interest"], inplace=True)
@@ -290,17 +292,18 @@ class Server:
         listAgency = self.catByAgency.get(category_name)
         return listAgency
 
-    def match_interest(input_df, match_with):
+    def match_interest(self, input_df, match_with):
         input_df = pd.merge(input_df, match_with, how='left', left_on='UNSPSC Title',
                             right_on='Filter UNSPSC of Interest')
         return input_df
 
     def visual_q2(self, input_df):
-        if 'Filter UNSPSC of Interest' not in list[input_df]:
+        if 'Filter UNSPSC of Interest' not in list(input_df):
             # updated file after add Category of Interest
-            updated_data = self.match_interest(input_df, self.match_df)
+            self.updated_data = self.match_interest(input_df, self.match_df)
+
         # filter the dataframe to exclude the items not interested
-        updated_data = filter(like='Categories of Interest')
+        self.updated_data.filter(like='Categories of Interest')
 
         # input from client's keyboard, link to UI
         catSelected = input('Enter the category of interest: ')
@@ -316,7 +319,7 @@ class Server:
 
         # return agency list under the category
         agency = self.category_agency(catSelected.lower())
-        funding = updated_data.loc[input_df['Agency Name'].isin(agency)]
+        funding = self.updated_data.loc[input_df['Agency Name'].isin(agency)]
         # group by agency name and sort in descend order
         top_funding = pd.pivot_table(funding, index='Agency Name', values='Value', aggfunc=np.sum) \
             .sort_values(by='Value', ascending=False)

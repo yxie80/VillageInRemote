@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 class Client:
        
     upload_Dataframe = pd.DataFrame()
+    cleaned_Dataframe = pd.DataFrame()
     listOfFields = []
     listOfSelection = []
     filename = ''
@@ -42,6 +43,7 @@ class Client:
             try:              
                 self.upload_Dataframe = pd.read_csv(upload_file,low_memory=False)
                 self.listOfFields = list(self.upload_Dataframe)
+                self.data_cleansing()
                 self.output = 'Pass'
             except FileNotFoundError:
                 self.output = "File Not Found!"
@@ -150,8 +152,8 @@ class Client:
 
 if __name__ == '__main__':
     c = Client()
-    c.upload_file('C:\\Users\\Nan\\Desktop\\Qt Project\\project V2.3\\full_db.csv')
-    print(c.listOfFields)
-    c.fields_selection(1)
-    c.visual_quest1(c.listOfSelection)
+    from Server import Server
+    s = Server()
+    c.upload_file("/Users/purple/Desktop/All CN.csv")
+    s.visual_q2(c.cleaned_Dataframe)
     
