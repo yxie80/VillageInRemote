@@ -18,7 +18,9 @@ if __name__ == '__main__':
     # extract unique value of 'UNSPSC Title'
     listOfCategory = df.loc[:,'UNSPSC Title'].unique()
     
-
+    
+    
+    
     # visualisation quesiton, use bar chart to represent the Tender funding by category of interest
     # bsed ont the UNSPSC code & Title
     def visual_quest1(self,listOfSelection):
@@ -26,8 +28,12 @@ if __name__ == '__main__':
         df1 = self.upload_Dataframe.loc[:,listOfSelection]
         # extrac unique value of 'UNSPSC Titile'
         listOfCategory = df1.loc[:,'UNSPSC Title'].unique()  # len(listOfCategory) is longer than sumByCat, nan(float type) is included
-        # create a new empty dataframe
-        new_pd = pd.DataFrame(columns=listOfSelection)
+        
+        
+#        # create a new empty dataframe
+#        new_pd = pd.DataFrame(columns=listOfSelection)
+        
+        
         
         for cat in listOfCategory:
             # calculate the sum value by unique 'UNSPSC Title'
