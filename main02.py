@@ -11,13 +11,16 @@ from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.uic import loadUi
 from Client_Test03 import Client
 
+
+
+
 class Client_test01(QDialog):
     client = Client()    
     filename = ''
     
-    def __init__(self):
-        super(Client_test01,self).__init__()
-        loadUi('uploadModule.ui',self)
+    def __init__(self):        
+        super(Client_test01, self).__init__()
+        loadUi('uploadModule.ui', self)
         self.setWindowTitle('File uploading!')
         self.submitButton.clicked.connect(self.on_submitButton_clicked)
 #        self.submitButton.clicked.connect(self.open_selectionModule)
@@ -31,11 +34,11 @@ class Client_test01(QDialog):
         self.client.upload_file(self.filename)
         if self.client.output == "File Not Found!":
             self.label_2.setText(self.client.output)
-        elif self.client.output == "SntaxError, file path should be C:/Users/data.csv":
+        elif self.client.output == "SyntaxError, file path should be C:/Users/data.csv":
             self.label_2.setText(self.client.output)
         elif self.client.output == 'Pass':
             self.newD = SelectionModule() # once the file has been successfully read, create an object of new ui
-            self.newD.show() # show secnond widget
+            self.newD.show() # show second widget
             self.hide() # hide the main widget
             self.newD.track_label.setText(str(self.client.listOfFields))
 #        self.label_3.setText(self.client.output)
@@ -57,11 +60,8 @@ if __name__ == '__main__':
 #    from Client_Test01 import Client
 #    client = Client()
 #    client.comm_module()
- 
-    app=QApplication(sys.argv)
-    widget=Client_test01()
+    app = QApplication(sys.argv)
+    widget = client_test01()
     widget.show()
-
         
-   
     sys.exit(app.exec_())
