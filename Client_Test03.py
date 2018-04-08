@@ -51,7 +51,7 @@ class Client:
                 self.output = "SntaxError, file path should be C:/Users/data.csv"
             break
     
-    # data cleansing
+    # data cleansing -- handling missing value
     def data_cleansing(self):
         df = self.upload_Dataframe
         # searching for missing values in columns
@@ -89,7 +89,7 @@ class Client:
                     for index in range(len(list_of_nan)):
                         # use UNSPSC ID to replace the Nan Value
                         df.loc[list_of_nan[index],features] = nan_UNSPSC_Code[index]
-                        print(df.loc[list_of_nan[index],[features,'UNSPSC Code']])
+#                        print(df.loc[list_of_nan[index],[features,'UNSPSC Code']])
                 elif features == 'ATM ID':
                     df.loc[:,features] = df.loc[:,features].fillna('N/A')
                 elif features == 'SON ID':
@@ -135,36 +135,17 @@ class Client:
             self.listOfSelection = ['Agency Name']
         elif questions == 1:  # How much funding is available in the target categories? (Total, by category, over time)
             self.listOfSelection = ['Value','UNSPSC Title']
+        elif questions == 2: # question 2
+            self.listOfSelection = []
         else:
             self.listOfSelection = []
             
-    # visualisation quesiton, use bar chart to represent the Tender funding by category of interest
-    # bsed ont the UNSPSC code & Title
-    def visual_quest1(self,listOfSelection):
-        # get a new dataframe based on the selected features
-        df1 = self.upload_Dataframe.loc[:,listOfSelection]
-        # extrac unique value of 'UNSPSC Titile'
-        listOfCategory = df1.loc[:,'UNSPSC Title'].unique()  # len(listOfCategory) is longer than sumByCat, nan(float type) is included
-        # create a new empty dataframe
-        new_pd = pd.DataFrame(columns=listOfSelection)
-        
-        for cat in listOfCategory:
-            # calculate the sum value by unique 'UNSPSC Title'
-            sumByCat = df1.groupby('UNSPSC Title')['Value'].sum()[cat]
-            # create a Serise with column = ['UNSPSC Title','Value']
-            df_sumByCat = pd.DataFrame([[sumByCat,cat]],columns=listOfSelection)
-            #update new_pd which saves the sum of value by title
-            new_pd = new_pd.append(df_sumByCat)
-            
-        print(new_pd)
-        
-    
     # **********************************************************************
 
 if __name__ == '__main__':
     c = Client()
-    c.upload_file('C:\\Users\\Nan\\Desktop\\Qt Project\\project V2.3\\full_db.csv')
-    print(c.listOfFields)
-    c.fields_selection(1)
-    c.visual_quest1(c.listOfSelection)
+    c.upload_file('/Users/NAN/Desktop/All_data.csv')
+#    print(c.listOfFields)
+#    c.fields_selection(1)
+#    print(c.cleaned_Dataframe.isnull().any())
     
