@@ -299,6 +299,7 @@ class Server:
                 print('Wrong type data')
             except KeyError:
                 print('Key not found')
+            return listAgency
             
 
     def match_interest(self, input_df, match_with):
