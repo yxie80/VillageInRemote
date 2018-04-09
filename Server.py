@@ -1,11 +1,10 @@
 import pandas as pd
 import numpy as np
-import collections
 
 class Server:
     # doc stored in the server for basic structure
     updated_data = pd.DataFrame()
-    base = pd.read_csv('Comm.csv', low_memory=False)
+    base = pd.read_csv('/Users/NAN/Desktop/Qt Project/Comm.csv', low_memory=False)
     base["Filter UNSPSC of Interest"] = base["Filter UNSPSC of Interest"].astype("category")
     base["Filter UNSPSC of Interest"].cat.set_categories(["Rest of Categories", "Categories of Interest"], inplace=True)
 
@@ -289,7 +288,6 @@ class Server:
     }
 
     def category_agency(self):
-        collections.defaultdict(lambda : 'Key not found')
         while True:
             try:
                 category_name = input('Enter the category of interest:')
@@ -299,25 +297,30 @@ class Server:
                 print('Wrong type data')
             except KeyError:
                 print('Key not found')
+        return listAgency
             
 
     def match_interest(self, input_df, match_with):
-        input_df = pd.merge(input_df, match_with, how='left', left_on='UNSPSC Title',
-                            right_on='Filter UNSPSC of Interest')
-        return input_df
+        new_df = input_df.merge(match_with, left_on = 'UNSPSC Title', right_index = True).reset_index()
+        return new_df
 
-    def visual_q2(self, input_df):
+    def visual_q2(self, input_df):        
         if 'Filter UNSPSC of Interest' not in list(input_df):
             # updated file after add Category of Interest
             self.updated_data = self.match_interest(input_df, self.match_df)
 
-        # filter the dataframe to exclude the items not interested
-        self.updated_data.filter(like='Categories of Interest') # another label[Rest of Categories]
+        # filter the dataframe to exclude the items not interested (Cat of int, is corresponding to the UNSPSC Title NOT Agency)
+        # print(self.updated_data.shape)
+        # print(self.updated_data.head(1))  correct
 
+        godP = self.updated_data['Filter UNSPSC of Interest'] == 'Categories of Interest'
+        data_interest = self.updated_data[godP==True]
+#        print(data_interest.shape)
+       
         # show all the category
 #        for category in self.catByAgency.keys():
 #            agency = self.catByAgency.get(category)
-#            funding = self.updated_data.loc[self.updated_data['Agency Name'].isin(agency)]
+#            funding = data_interest.loc[self.updated_data['Agency Name'].isin(agency)]
 #            # group by agency name and sort in descend order
 #            top_funding = pd.pivot_table(funding, index='Agency Name', values='Value', aggfunc=np.sum) \
 #                 .sort_values(by='Value', ascending=False)
@@ -326,20 +329,21 @@ class Server:
 
 #        # return agency list under the category
         agency = self.category_agency()
-        funding = self.updated_data.loc[input_df['Agency Name'].isin(agency)]
+        funding = data_interest.loc[input_df['Agency Name'].isin(agency)] 
 
-        # group by agency name and sort in descend order (DataFrame)
+         # group by agency name and sort in descend order (DataFrame)
         top_funding = pd.pivot_table(funding, index='Agency Name', values='Value', aggfunc=np.sum, margins=True,margins_name='Total_Sum') \
-            .sort_values(by='Value', ascending=False)
+             .sort_values(by='Value', ascending=False)
         top_funding.loc['Total'] = top_funding['Value'].sum()
-        # return top_funding # return sth to client
+         # return top_funding # return sth to client
         print(top_funding)
     
     
-    # question 1    
-    def visual_q1(self,input_df):
-        # return a dataframe with an addition column ['Category of Intresest'] -- ['Categories of Intresest','Rest of Categories']
-        self.updated_data = self.match_interest(input_df, self.match_df)
-#        print(self.updated_data.shape) # (698111, 36)
-#        print(list(self.updated_data)) # 'Filter UNSPSC of Interest' new column
+    # # question 1    
+    # def visual_q1(self,input_df):
+    #     # return a dataframe with an addition column ['Category of Intresest'] -- ['Categories of Intresest','Rest of Categories']
+    #     self.updated_data = self.match_interest(input_df, self.match_df)
+    #     # print(self.updated_data.shape) # (698111, 36)
+    #    # print(list(self.updated_data)) # 'Filter UNSPSC of Interest' new column
+
        
