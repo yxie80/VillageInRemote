@@ -59,6 +59,4 @@ if __name__ == '__main__':
     widget = main()
     widget.show()
 
-
->>>>>>> master:main.py
     sys.exit(app.exec_())
