@@ -304,7 +304,8 @@ class Server:
         new_df = input_df.merge(match_with, left_on = 'UNSPSC Title', right_index = True).reset_index()
         return new_df
 
-    def visual_q2(self, input_df):        
+
+    def visual_q2(self, input_df):
         if 'Filter UNSPSC of Interest' not in list(input_df):
             # updated file after add Category of Interest
             self.updated_data = self.match_interest(input_df, self.match_df)
