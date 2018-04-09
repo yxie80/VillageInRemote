@@ -297,6 +297,7 @@ class Server:
                             right_on='Filter UNSPSC of Interest')
         return input_df
 
+
     def visual_q2(self, input_df):
         if 'Filter UNSPSC of Interest' not in list(input_df):
             # updated file after add Category of Interest
