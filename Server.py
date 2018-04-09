@@ -5,7 +5,7 @@ import collections
 class Server:
     # doc stored in the server for basic structure
     updated_data = pd.DataFrame()
-    base = pd.read_csv('/Users/NAN/Desktop/Qt Project/Comm.csv', low_memory=False)
+    base = pd.read_csv('Comm.csv', low_memory=False)
     base["Filter UNSPSC of Interest"] = base["Filter UNSPSC of Interest"].astype("category")
     base["Filter UNSPSC of Interest"].cat.set_categories(["Rest of Categories", "Categories of Interest"], inplace=True)
 
@@ -300,7 +300,6 @@ class Server:
             except KeyError:
                 print('Key not found')
             
-        return listAgency
 
     def match_interest(self, input_df, match_with):
         input_df = pd.merge(input_df, match_with, how='left', left_on='UNSPSC Title',
@@ -344,9 +343,3 @@ class Server:
 #        print(self.updated_data.shape) # (698111, 36)
 #        print(list(self.updated_data)) # 'Filter UNSPSC of Interest' new column
        
-        
-        # categories of interest data
-#        data_interest = self.updated_data.filter(like='Categories of Interest')
-#        for category in self.catByAgency.keys():
-#            agency = self.catByAgency.get(category)
-#            funding = data_interest[self.updated_data]

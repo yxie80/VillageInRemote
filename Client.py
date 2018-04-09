@@ -154,6 +154,6 @@ if __name__ == '__main__':
     c = Client()
     from Server import Server
     s = Server()
-    c.upload_file('/Users/NAN/Desktop/Qt Project/All_data.csv')
-    s.visual_q1(c.cleaned_Dataframe)
-    
+    c.upload_file("/Users/purple/Desktop/All CN.csv")
+    s.visual_q2(c.cleaned_Dataframe)
+
